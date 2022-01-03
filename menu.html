@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu </title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, rgba(255, 0, 0, 0), rgb(243, 73, 73));
+        }
+
+        .items {
+            height: 200px;
+            width: 90%;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            margin: auto;
+        }
+
+        #contentDiv {
+            /* border: 2px solid red; */
+            width: 200px;
+            padding: 50px;
+            box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+        }
+
+        img {
+            height: 200px;
+            width: 200px;
+        }
+
+        button {
+            height: 40px;
+            width: 180px;
+            background-color: rgb(5, 42, 202);
+            border-radius: 20px;
+            color: rgb(255, 255, 255);
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Menu Plate Here</h1>
+    <div class="items">
+
+    </div>
+</body>
+
+</html>
+<script>
+    async function getdisc() {
+        try {
+            let response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=a`)
+            let data = await response.json();
+            console.log(data)
+            displaydata(data.meals)
+        }
+        catch (error) {
+            console.log("Error", error)
+        }
+    }
+    getdisc()
+
+    var mainDiv = document.querySelector(".items");
+    
+    
+    function displaydata(data) {
+        data.map(function (element) {
+
+            let contentDiv = document.createElement("div");
+            contentDiv.setAttribute("id", "contentDiv")
+            let imgDiv = document.createElement("div")
+            let img = document.createElement("img");
+            let price = document.createElement("h3")
+            let addcard = document.createElement("button")
+            let name = document.createElement("h2")
+             
+            
+
+            addcard.innerText = "Add To Cart"
+           
+            name.innerText = element.strIngredient1;
+            img.src = element.strMealThumb;
+            price.innerText = `Price:-` + Math.floor(Math.random(100) * 500);
+            imgDiv.append(img);
+            contentDiv.append(imgDiv, name, price, addcard)
+            mainDiv.append(contentDiv)
+              
+
+
+        })
+    }
+
+</script>
